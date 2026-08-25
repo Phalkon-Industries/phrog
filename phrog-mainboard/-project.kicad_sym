@@ -18,8 +18,8 @@
 				)
 			)
 		)
-		(property "Value" ""
-			(at 0 0 0)
+		(property "Value" "LM358"
+			(at 4.064 -6.096 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -55,16 +55,6 @@
 			(show_name no)
 			(do_not_autoplace no)
 			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_locked" ""
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -328,7 +318,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(symbol "MCP34063"
+	(symbol "MC34063"
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -344,7 +334,7 @@
 				)
 			)
 		)
-		(property "Value" "MCP34063"
+		(property "Value" "MC34063"
 			(at 0 0 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -397,7 +387,7 @@
 				)
 			)
 		)
-		(symbol "MCP34063_0_0"
+		(symbol "MC34063_0_0"
 			(pin unspecified line
 				(at -8.89 -3.81 0)
 				(length 2.54)
@@ -543,7 +533,7 @@
 				)
 			)
 		)
-		(symbol "MCP34063_1_1"
+		(symbol "MC34063_1_1"
 			(rectangle
 				(start -6.35 -1.27)
 				(end 5.08 -25.4)
@@ -574,7 +564,7 @@
 				)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "NAU7802"
 			(at 0 0 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -956,7 +946,7 @@
 				)
 			)
 		)
-		(property "Value" ""
+		(property "Value" "nrf52840_pro_micro"
 			(at 0 0 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -993,16 +983,6 @@
 			(show_name no)
 			(do_not_autoplace no)
 			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_locked" ""
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1110,7 +1090,7 @@
 						)
 					)
 				)
-				(number "7"
+				(number "6"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1128,7 +1108,7 @@
 						)
 					)
 				)
-				(number "8"
+				(number "7"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1146,7 +1126,7 @@
 						)
 					)
 				)
-				(number "9"
+				(number "8"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1164,7 +1144,7 @@
 						)
 					)
 				)
-				(number "10"
+				(number "9"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1182,7 +1162,7 @@
 						)
 					)
 				)
-				(number "11"
+				(number "10"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1200,7 +1180,7 @@
 						)
 					)
 				)
-				(number "12"
+				(number "11"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1218,7 +1198,7 @@
 						)
 					)
 				)
-				(number "13"
+				(number "12"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1236,7 +1216,7 @@
 						)
 					)
 				)
-				(number "14"
+				(number "13"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1254,7 +1234,7 @@
 						)
 					)
 				)
-				(number "15"
+				(number "14"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1272,7 +1252,7 @@
 						)
 					)
 				)
-				(number "16"
+				(number "15"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1290,7 +1270,7 @@
 						)
 					)
 				)
-				(number "17"
+				(number "16"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1308,7 +1288,7 @@
 						)
 					)
 				)
-				(number "18"
+				(number "17"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1326,7 +1306,7 @@
 						)
 					)
 				)
-				(number "19"
+				(number "18"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1344,7 +1324,7 @@
 						)
 					)
 				)
-				(number "20"
+				(number "19"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1362,7 +1342,7 @@
 						)
 					)
 				)
-				(number "21"
+				(number "20"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1380,7 +1360,7 @@
 						)
 					)
 				)
-				(number "22"
+				(number "21"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1398,7 +1378,7 @@
 						)
 					)
 				)
-				(number "23"
+				(number "22"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1416,7 +1396,7 @@
 						)
 					)
 				)
-				(number "24"
+				(number "23"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1434,7 +1414,7 @@
 						)
 					)
 				)
-				(number "25"
+				(number "24"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1452,7 +1432,7 @@
 						)
 					)
 				)
-				(number "26"
+				(number "25"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1470,7 +1450,7 @@
 						)
 					)
 				)
-				(number "27"
+				(number "26"
 					(effects
 						(font
 							(size 1.27 1.27)

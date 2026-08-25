@@ -4584,6 +4584,16 @@
 		)
 		(uuid "5f813971-ce54-41aa-a8f2-b8aa56ca8c3a")
 	)
+	(text "Update resistor values for the LEDs!\n"
+		(exclude_from_sim no)
+		(at 251.46 106.426 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "dfdc6d42-18ad-4e72-9130-d35d59283183")
+	)
 	(junction
 		(at 166.37 20.32)
 		(diameter 0)
@@ -10521,7 +10531,7 @@
 				)
 			)
 		)
-		(property "Value" "MCP34063"
+		(property "Value" "MC34063"
 			(at 186.436 24.13 0)
 			(show_name no)
 			(do_not_autoplace no)
