@@ -1,0 +1,34 @@
+Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
+C1,100nF,C_Disc_D4.3mm_W1.9mm_P5.00mm,43.07,-10.61,90.0,top
+C2,100nF,C_Disc_D4.3mm_W1.9mm_P5.00mm,40.57,-28.61,180.0,top
+C3,1uF,C_Disc_D4.3mm_W1.9mm_P5.00mm,42.885624,-22.232287,90.0,top
+C4,10uF,C_Disc_D4.3mm_W1.9mm_P5.00mm,18.5,-11.0,180.0,top
+C5,10uF,C_Disc_D4.3mm_W1.9mm_P5.00mm,23.5,-4.0,180.0,top
+C6,100nF,C_Disc_D4.3mm_W1.9mm_P5.00mm,45.606091,-8.437217,90.0,top
+D1,1N5817,D_DO-41_SOD81_P10.16mm_Horizontal,21.92,-14.0,180.0,top
+D2,GREENLED,LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm,89.37,-17.5,90.0,bottom
+D3,BLUELED,LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm,89.048596,-31.692386,90.0,bottom
+D4,1N5817,D_DO-41_SOD81_P10.16mm_Horizontal,21.92,-7.5,180.0,top
+J1,Battery,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,9.0,-23.0,90.0,top
+PD_Blue1,Photodiode,PD_Vertical,58.624143,-32.227386,90.0,bottom
+PD_Green1,Photodiode,PD_Vertical,59.0,-18.035,90.0,bottom
+Q3,2N3904,TO-92_Inline,81.27,-11.0,0.0,top
+Q4,2N3904,TO-92_Inline,87.563795,-38.253119,0.0,top
+R1,10k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,36.5,-41.08,-90.0,top
+R10,10k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,86.0,-8.08,-90.0,top
+R11,5.6k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,89.454678,-7.84861,90.0,top
+R12,10k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,79.804737,-41.704746,90.0,top
+R13,5.6k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,82.833795,-41.753119,-90.0,top
+R2,10k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,41.5,-41.5,-90.0,top
+R6,10k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,52.655,-46.025,0.0,top
+R8,27R,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,84.234878,-22.588179,180.0,top
+R9,27R,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,84.253795,-26.253119,180.0,top
+RV1,100k,Potentiometer_Bourns_3296W_Vertical,49.84,-25.469626,0.0,top
+RV2,1M,Potentiometer_Bourns_3296W_Vertical,53.455,-9.235,0.0,top
+SW1,RESET,SW_PUSH_6mm,20.75,-21.75,0.0,top
+SW3,SW_SPDT,SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm,1.709517,-20.707713,-90.0,top
+TH1,SampleThermistor,Thermistor_Wire,54.043987,-40.551985,90.0,top
+U1,NRF52840 Pro Micro,nrf52840_pro_micro,16.74,-37.2,90.0,top
+U2,LM358,DIP-8_W7.62mm_LongPads,49.69,-17.49,90.0,top
+U3,NAU7802KGI,DIP-16_W7.62mm_LongPads,36.19,-16.19,180.0,top
+U4,7660S,DIP-8_W7.62mm_LongPads,9.69,-10.19,180.0,top
