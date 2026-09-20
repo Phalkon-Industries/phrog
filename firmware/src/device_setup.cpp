@@ -21,11 +21,15 @@ const Nau7802Settings g_device_nau7802_settings = {
     false,  // pga_bypass
 };
 
+// The LED and amplifier settle electrically in well under a millisecond; the real settling is the
+// NAU7802 decimation filter, handled by discarding conversions after every LED or channel change.
+// The timeout covers the four-conversion restart the chip performs after a channel switch at 10 SPS.
 const LightReadingsConfig g_device_light_readings_config = {
-    {LedDriverChannel::LED_DRIVER_CHANNEL_GREEN, 100u},  // TODO(phrog): settle time TBD on hardware.
-    {LedDriverChannel::LED_DRIVER_CHANNEL_BLUE, 100u},
-    100u,      // dark_settle_time_us
-    1000000u,  // adc_timeout_us
+    {LedDriverChannel::LED_DRIVER_CHANNEL_GREEN, 5000u},  // settle_time_us
+    {LedDriverChannel::LED_DRIVER_CHANNEL_BLUE, 5000u},
+    5000u,     // dark_settle_time_us
+    4u,        // settle_conversions
+    1500000u,  // adc_timeout_us
 };
 
 // R6 is the 10 k series resistor on the netlist; the thermistor is the Phoenix sample part (10 k NTC).

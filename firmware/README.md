@@ -30,7 +30,7 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 | `lib/mocks` | Mock controller and BLE bridge (ported verbatim). |
 | `lib/nau7802` | NAU7802 driver (implemented; internal LDO, DRDY-gated reads, offset calibration). |
 | `lib/led_driver` | GPIO LED drive (implemented; NPN current sinks, active high). |
-| `lib/light_readings` | Dark/green/blue sweep helper (skeleton). |
+| `lib/light_readings` | Sweep helper (implemented; per-photodiode dark and lit codes, saturation flag, statistics ported from Phoenix). |
 | `lib/thermistor_reader` | SAADC thermistor measurement (implemented; ratiometric divider, Steinhart-Hart from Phoenix). |
 | `lib/cli` | Serial command interface (skeleton). |
 | `lib/phrog_settings` | Persistent settings in internal flash (skeleton). |
