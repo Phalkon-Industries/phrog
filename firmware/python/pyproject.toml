@@ -1,0 +1,23 @@
+[project]
+name = "phrog-host-tooling"
+version = "0.0.1"
+description = "Host automation helpers for the phrog firmware (mock BLE tester)."
+requires-python = ">=3.10"
+dependencies = [
+	"pyserial>=3.5",
+	"matplotlib>=3.8",
+	"bleak>=0.22",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3"]
+
+[build-system]
+requires = ["setuptools>=67"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q"
+testpaths = ["python/tests"]
+pythonpath = ["python"]
