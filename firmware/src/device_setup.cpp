@@ -28,12 +28,12 @@ const LightReadingsConfig g_device_light_readings_config = {
     1000000u,  // adc_timeout_us
 };
 
+// R6 is the 10 k series resistor on the netlist; the thermistor is the Phoenix sample part (10 k NTC).
 const ThermistorReaderConfig g_device_thermistor_reader_config = {
     PIN_THERMISTOR_SIGNAL,
     PIN_THERMISTOR_DRIVE,
-    10000u,    // series_resistance_ohms  TODO(phrog): confirm against schematic.
+    10000u,    // series_resistance_ohms
     10000.0f,  // r25_ohms
-    3380.0f,   // beta_constant
     2000u,     // settle_time_us
     0.0f,      // calibration_offset_c
 };

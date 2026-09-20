@@ -30,7 +30,7 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 | `lib/nau7802` | NAU7802 driver (implemented; internal LDO, DRDY-gated reads, offset calibration). |
 | `lib/led_driver` | GPIO LED drive (implemented; NPN current sinks, active high). |
 | `lib/light_readings` | Dark/green/blue sweep helper (skeleton). |
-| `lib/thermistor_reader` | SAADC thermistor measurement (skeleton). |
+| `lib/thermistor_reader` | SAADC thermistor measurement (implemented; ratiometric divider, Steinhart-Hart from Phoenix). |
 | `lib/cli` | Serial command interface (skeleton). |
 | `lib/phrog_settings` | Persistent settings in internal flash (skeleton). |
 | `test/` | Unity suites; one per module. |
