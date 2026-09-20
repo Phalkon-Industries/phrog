@@ -8,6 +8,17 @@ const LedDriverConfig g_device_led_driver_config = {
 const Nau7802Config g_device_nau7802_config = {
     &Wire,
     NAU7802_I2C_ADDRESS,
+    PIN_NAU7802_DRDY,
+};
+
+// DVDD is 3.3 V so the LDO tops out at 3.0 V; unity gain keeps the 0..1.5 V single-ended range.
+// 10 SPS gives the best 50/60 Hz rejection; light_readings may trade that for speed later.
+const Nau7802Settings g_device_nau7802_settings = {
+    Nau7802Gain::NAU7802_GAIN_X1,
+    Nau7802SampleRate::NAU7802_SPS_10,
+    Nau7802Ldo::NAU7802_LDO_3V0,
+    Nau7802Channel::NAU7802_CHANNEL_1,
+    false,  // pga_bypass
 };
 
 const LightReadingsConfig g_device_light_readings_config = {
@@ -45,8 +56,10 @@ int device_setup_initialize(void) {
   // Step 2: Initialize settings storage so calibration data is available before measurements.
   GUARD(phrog_settings_initialize(&k_default_settings));
 
-  // Step 3: Bring up the NAU7802 ADC that samples the photodiode signal.
+  // Step 3: Bring up the NAU7802 ADC that samples the photodiode signal and program the board's
+  // conversion settings, which also runs the internal offset calibration.
   GUARD(nau7802_initialize(&g_device_nau7802_config));
+  GUARD(nau7802_apply_settings(&g_device_nau7802_settings));
 
   // Step 4: Initialize the LED driver pins in a known-off state.
   GUARD(led_driver_initialize(&g_device_led_driver_config));

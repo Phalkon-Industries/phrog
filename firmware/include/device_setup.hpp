@@ -24,12 +24,15 @@
 #define PIN_LED_BLUE_DRIVE PIN_P1_11
 
 // I2C bus for the NAU7802 (SCL P1.04, SDA P1.06) is owned by Wire via PIN_WIRE_SCL / PIN_WIRE_SDA.
+// DRDY goes high when a conversion is ready (CTRL1.DRDYP left at the active-high default).
+#define PIN_NAU7802_DRDY PIN_P1_00
 
-// NAU7802 has a fixed 7-bit I2C address (datasheet section 9.1).
+// NAU7802 has a fixed 7-bit I2C address (datasheet section 1.9.2).
 #define NAU7802_I2C_ADDRESS 0x2Au
 
 extern const LedDriverConfig        g_device_led_driver_config;
 extern const Nau7802Config          g_device_nau7802_config;
+extern const Nau7802Settings        g_device_nau7802_settings;
 extern const LightReadingsConfig    g_device_light_readings_config;
 extern const ThermistorReaderConfig g_device_thermistor_reader_config;
 

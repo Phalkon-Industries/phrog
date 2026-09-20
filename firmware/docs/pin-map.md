@@ -15,7 +15,7 @@ checked against the PCB netlist.
 | Thermistor drive         | P0.02   | 2           | `PIN_THERMISTOR_DRIVE`       |
 | Green LED drive          | P1.13   | 45          | `PIN_LED_GREEN_DRIVE`        |
 | Blue LED drive           | P1.11   | 43          | `PIN_LED_BLUE_DRIVE`         |
-| NAU7802 DRDY             | P1.00   | 32          | (not yet defined)            |
+| NAU7802 DRDY             | P1.00   | 32          | `PIN_NAU7802_DRDY`           |
 | I2C SCL (NAU7802)        | P1.04   | 36          | `PIN_WIRE_SCL` (variant)     |
 | I2C SDA (NAU7802)        | P1.06   | 38          | `PIN_WIRE_SDA` (variant)     |
 
