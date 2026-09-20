@@ -198,6 +198,22 @@ static void test_apply_settings_can_enable_pga_bypass(void) {
   TEST_ASSERT_EQUAL_HEX8(0u, pga & NAU7802_PGA_BYPASS_ENABLE);
 }
 
+static void test_get_settings_returns_what_was_applied(void) {
+  Nau7802Settings settings = {};
+  TEST_ASSERT_EQUAL_INT(NAU7802_ERR_INVALID_ARG, nau7802_get_settings(NULL));
+  TEST_ASSERT_EQUAL_INT(NAU7802_ERR_NOT_INITIALIZED, nau7802_get_settings(&settings));
+  TEST_ASSERT_EQUAL_INT(NAU7802_OK, nau7802_initialize(&g_device_nau7802_config));
+  TEST_ASSERT_EQUAL_INT(NAU7802_ERR_NOT_INITIALIZED, nau7802_get_settings(&settings));
+
+  TEST_ASSERT_EQUAL_INT(NAU7802_OK, nau7802_apply_settings(&k_slow_settings));
+  TEST_ASSERT_EQUAL_INT(NAU7802_OK, nau7802_get_settings(&settings));
+  TEST_ASSERT_EQUAL_INT(static_cast<int>(k_slow_settings.sample_rate), static_cast<int>(settings.sample_rate));
+  TEST_ASSERT_EQUAL_INT(static_cast<int>(k_slow_settings.ldo), static_cast<int>(settings.ldo));
+  TEST_ASSERT_EQUAL_INT(static_cast<int>(k_slow_settings.gain), static_cast<int>(settings.gain));
+  TEST_ASSERT_EQUAL_INT(static_cast<int>(k_slow_settings.channel), static_cast<int>(settings.channel));
+  TEST_ASSERT_EQUAL(k_slow_settings.pga_bypass, settings.pga_bypass);
+}
+
 static void test_apply_settings_rejects_null(void) {
   TEST_ASSERT_EQUAL_INT(NAU7802_OK, nau7802_initialize(&g_device_nau7802_config));
   TEST_ASSERT_EQUAL_INT(NAU7802_ERR_INVALID_ARG, nau7802_apply_settings(NULL));
@@ -330,6 +346,7 @@ void setup() {
   RUN_TEST(test_initialize_is_repeatable);
   RUN_TEST(test_apply_settings_programs_ctrl_registers_and_calibrates);
   RUN_TEST(test_apply_settings_can_enable_pga_bypass);
+  RUN_TEST(test_get_settings_returns_what_was_applied);
   RUN_TEST(test_apply_settings_rejects_null);
   RUN_TEST(test_select_channel_only_touches_chs_bit);
   RUN_TEST(test_read_conversion_returns_in_range_codes_via_drdy_pin);

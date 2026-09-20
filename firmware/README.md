@@ -32,7 +32,7 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 | `lib/led_driver` | GPIO LED drive (implemented; NPN current sinks, active high). |
 | `lib/light_readings` | Sweep helper (implemented; per-photodiode dark and lit codes, saturation flag, statistics ported from Phoenix). |
 | `lib/thermistor_reader` | SAADC thermistor measurement (implemented; ratiometric divider, Steinhart-Hart from Phoenix). |
-| `lib/cli` | Serial command interface (skeleton). |
+| `lib/cli` | Serial command interface (implemented: `b` baseline, `s` sample + pH, `c` live monitor, `v`, `help`). |
 | `lib/phrog_settings` | Persistent settings in internal flash (skeleton). |
 | `test/` | Unity suites; one per module. |
 | `python/` | Host tooling: mock BLE tester and pytest suite (ported). |

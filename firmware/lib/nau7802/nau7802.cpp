@@ -5,8 +5,10 @@
 #include <string.h>
 
 // ===================== Module State =============================================
-static bool          g_initialized = false;
-static Nau7802Config g_config      = {};
+static bool            g_initialized    = false;
+static Nau7802Config   g_config         = {};
+static bool            g_settings_valid = false;
+static Nau7802Settings g_settings       = {};
 
 // Wire.endTransmission codes (Arduino convention): 0 = success, 2 = address NACK.
 static const uint8_t k_wire_ok           = 0u;
@@ -144,7 +146,8 @@ int nau7802_initialize(const Nau7802Config* config) {
   delay(k_ldo_settle_ms);
   GUARD(wait_for_power_up_ready());
 
-  g_initialized = true;
+  g_settings_valid = false;
+  g_initialized    = true;
   return NAU7802_OK;
 }
 
@@ -168,7 +171,19 @@ int nau7802_apply_settings(const Nau7802Settings* settings) {
                         settings->pga_bypass ? NAU7802_PGA_BYPASS_ENABLE : 0u));
 
   // Step 4: Gain, rate, and channel changes all invalidate the offset trim (section 1.12).
-  return nau7802_calibrate_internal_offset();
+  GUARD(nau7802_calibrate_internal_offset());
+
+  // Step 5: Remember what is now programmed so callers can restore it later.
+  memcpy(&g_settings, settings, sizeof(Nau7802Settings));
+  g_settings_valid = true;
+  return NAU7802_OK;
+}
+
+int nau7802_get_settings(Nau7802Settings* settings_out) {
+  GUARD_NONNULL(settings_out);
+  GUARD_INITIALIZED(g_initialized && g_settings_valid);
+  memcpy(settings_out, &g_settings, sizeof(Nau7802Settings));
+  return NAU7802_OK;
 }
 
 int nau7802_select_channel(Nau7802Channel channel) {
@@ -242,8 +257,10 @@ int32_t nau7802_unpack_conversion(const uint8_t bytes[NAU7802_CONVERSION_BYTES])
 }
 
 void nau7802_reset_for_test(void) {
-  g_initialized = false;
+  g_initialized    = false;
+  g_settings_valid = false;
   memset(&g_config, 0, sizeof(Nau7802Config));
+  memset(&g_settings, 0, sizeof(Nau7802Settings));
 }
 
 int nau7802_read_register_for_test(uint8_t reg, uint8_t* value_out) {

@@ -171,6 +171,18 @@ int nau7802_initialize(const Nau7802Config* config);
 int nau7802_apply_settings(const Nau7802Settings* settings);
 
 /**
+ * @brief Copy the settings most recently programmed by nau7802_apply_settings.
+ *
+ * Lets a caller such as the CLI monitor change the rate temporarily and put it back without
+ * knowing where the board defaults live.
+ *
+ * @param settings_out Destination for the cached settings.
+ * @return NAU7802_OK, NAU7802_ERR_INVALID_ARG on NULL, or NAU7802_ERR_NOT_INITIALIZED when the
+ *         driver is down or nothing has been applied since initialise.
+ */
+int nau7802_get_settings(Nau7802Settings* settings_out);
+
+/**
  * @brief Switch the input multiplexer without touching any other setting.
  *
  * The first conversions after a switch still carry the old channel through the filter; callers
