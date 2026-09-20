@@ -22,7 +22,8 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 | `src/main.cpp` | Production entry point (device setup + CLI). |
 | `src/examples/mock_main.cpp` | Mock BLE application for phone-app development (ported). |
 | `src/examples/led_blink_main.cpp` | Bench example that cycles the measurement LEDs every second. |
-| `src/examples/adc_monitor_main.cpp` | Bench example that streams photodiode ADC codes, dark and lit, for trimpot setting. |
+| `src/examples/adc_monitor_main.cpp` | Bench example: photodiode ADC codes, dark and lit, as a plain fixed-width table with a LOW/GOOD/HIGH verdict for trimpot tuning. |
+| `src/examples/adc_monitor_ansi_colored_main.cpp` | The same monitor redrawn in place with a coloured verdict column, for terminals that render ANSI. |
 | `lib/phoenix_common` | Shared `GUARD` macros and `PHX_*` return codes (ported verbatim). |
 | `lib/ph_equations` | Spectrophotometric pH maths (ported verbatim). |
 | `lib/phoenix_ble` | BLE server facade + Bluefruit backend (ported verbatim). |
@@ -43,7 +44,9 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 pio run -e main            # production firmware
 pio run -e mock_main       # mock BLE app
 pio run -e led_blink -t upload   # flash the LED cycling bench example
-pio run -e adc_monitor -t upload # flash the photodiode ADC monitor (trimpot adjustment)
+pio run -e adc_monitor -t upload               # flash the plain photodiode ADC monitor (trimpot adjustment)
+pio run -e adc_monitor_ansi_colored -t upload  # same monitor, redrawn in place with colour
+pio device monitor -e adc_monitor_ansi_colored # watch it; the env passes the ANSI codes through
 pio test -e main -vv       # full Unity suite on hardware
 pio test -e main -vv -f *nau7802*
 ```
