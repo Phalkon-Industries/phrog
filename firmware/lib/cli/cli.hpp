@@ -10,9 +10,9 @@
 
 class Print;
 
-// Sweeps averaged per baseline or sample. At 10 SPS with four discarded conversions per state a
-// sweep takes about two seconds, so this keeps a measurement around ten seconds. It should become a
-// stored setting once phrog_settings has fields.
+// Sweeps averaged per baseline or sample when the settings module is not initialised; otherwise
+// the stored measurement_sweep_count is used. At 10 SPS with four discarded conversions per state
+// a sweep takes about two seconds, so five keeps a measurement around ten seconds.
 #define CLI_MEASUREMENT_SWEEP_COUNT 5u
 
 // Target window for lit readings in monitor mode, as percent of positive full scale, matching the

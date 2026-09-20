@@ -33,7 +33,7 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 | `lib/light_readings` | Sweep helper (implemented; per-photodiode dark and lit codes, saturation flag, statistics ported from Phoenix). |
 | `lib/thermistor_reader` | SAADC thermistor measurement (implemented; ratiometric divider, Steinhart-Hart from Phoenix). |
 | `lib/cli` | Serial command interface (implemented: `b` baseline, `s` sample + pH, `c` live monitor, `v`, `help`). |
-| `lib/phrog_settings` | Persistent settings in internal flash (skeleton). |
+| `lib/phrog_settings` | Persistent per-unit settings in internal flash (implemented; LittleFS via InternalFS, versioned file, sweep count and thermistor offset). |
 | `test/` | Unity suites; one per module. |
 | `python/` | Host tooling: mock BLE tester and pytest suite (ported). |
 | `docs/` | Style guide, TDD and git workflow, pin map. |
@@ -55,6 +55,6 @@ Run `pio` from this directory. See `docs/contributor-checklist.md` before starti
 
 ## Status
 
-Repository scaffold only. Skeleton modules validate arguments and cache configuration but
-return `PHX_ERR_NOT_IMPLEMENTED` from measurement calls. Implementation follows the TDD
-workflow in `.github/TDD.md`.
+All planned modules are implemented and tested on hardware: LED drive, NAU7802 ADC, thermistor,
+sweeps with statistics, the serial CLI, and flash-backed settings. BLE in the production app is
+not yet wired up (the `mock_main` environment carries the ported Phoenix BLE stack).

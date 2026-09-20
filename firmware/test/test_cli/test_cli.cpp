@@ -1,5 +1,6 @@
 #include "cli.hpp"
 #include "ph_equations.hpp"
+#include "phrog_settings.hpp"
 #include "unity_config.h"
 #include <Adafruit_TinyUSB.h>
 #include <Arduino.h>
@@ -211,6 +212,10 @@ void setUp(void) {
 void tearDown(void) {
   cli_test_set_measurement_hooks(NULL);
   cli_test_set_output(NULL);
+  if (phrog_settings_is_initialized()) {
+    (void) phrog_settings_reset_to_defaults();
+    phrog_settings_deinitialize();
+  }
 }
 
 // ===================== Dispatch ==================================================
@@ -235,9 +240,10 @@ static void test_help_lists_every_command(void) {
   TEST_ASSERT_TRUE(output.indexOf("help\t") >= 0);
 }
 
-static void test_version_prints_firmware_name(void) {
+static void test_version_prints_firmware_name_then_settings_state(void) {
   TEST_ASSERT_EQUAL_INT(CLI_DISPATCH_OK, cli_dispatch_command("v"));
-  TEST_ASSERT_TRUE(g_recording_print.last_line().startsWith("phrog-cli "));
+  TEST_ASSERT_TRUE(g_recording_print.buffer().startsWith("phrog-cli "));
+  TEST_ASSERT_TRUE(g_recording_print.last_line().startsWith("settings: not initialized"));
 }
 
 // ===================== Baseline and sample =======================================
@@ -258,6 +264,20 @@ static void test_baseline_caches_stats_with_configured_sweep_count(void) {
   TEST_ASSERT_TRUE(output.indexOf("Taking baseline...") >= 0);
   TEST_ASSERT_TRUE(output.indexOf("dark_blue") >= 0);
   TEST_ASSERT_TRUE(output.indexOf("dark_green") >= 0);
+}
+
+static void test_baseline_uses_stored_sweep_count_when_settings_are_initialized(void) {
+  const PhrogSettings defaults = {5u, 0.0f, {0}};
+  TEST_ASSERT_EQUAL_INT(PHROG_SETTINGS_OK, phrog_settings_initialize(&defaults));
+  PhrogSettings custom = {3u, 0.0f, {0}};
+  TEST_ASSERT_EQUAL_INT(PHROG_SETTINGS_OK, phrog_settings_save(&custom));
+
+  TEST_ASSERT_EQUAL_INT(CLI_DISPATCH_OK, cli_dispatch_command("b"));
+  TEST_ASSERT_EQUAL_UINT32(3u, g_last_sweep_requested);
+
+  g_recording_print.reset();
+  TEST_ASSERT_EQUAL_INT(CLI_DISPATCH_OK, cli_dispatch_command("v"));
+  TEST_ASSERT_TRUE(g_recording_print.buffer().indexOf("measurement_sweep_count: 3") >= 0);
 }
 
 static void test_baseline_failure_reports_error_and_leaves_no_cache(void) {
@@ -376,8 +396,9 @@ void setup() {
   RUN_TEST(test_dispatch_rejects_empty_command);
   RUN_TEST(test_dispatch_rejects_unknown_command);
   RUN_TEST(test_help_lists_every_command);
-  RUN_TEST(test_version_prints_firmware_name);
+  RUN_TEST(test_version_prints_firmware_name_then_settings_state);
   RUN_TEST(test_baseline_caches_stats_with_configured_sweep_count);
+  RUN_TEST(test_baseline_uses_stored_sweep_count_when_settings_are_initialized);
   RUN_TEST(test_baseline_failure_reports_error_and_leaves_no_cache);
   RUN_TEST(test_sample_without_baseline_reports_missing);
   RUN_TEST(test_sample_emits_stats_temperature_and_ph);

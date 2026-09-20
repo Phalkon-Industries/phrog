@@ -42,9 +42,12 @@ const ThermistorReaderConfig g_device_thermistor_reader_config = {
     0.0f,      // calibration_offset_c
 };
 
-// Default settings applied when flash is empty or corrupt.
+// Default settings applied when flash is empty or corrupt: five sweeps per measurement and no
+// thermistor correction until a unit has been checked against a reference thermometer.
 static const PhrogSettings k_default_settings = {
-    {0},  // reserved
+    5u,    // measurement_sweep_count
+    0.0f,  // thermistor_calibration_offset_c
+    {0},   // reserved
 };
 
 int device_setup_initialize(void) {
@@ -71,8 +74,14 @@ int device_setup_initialize(void) {
   // Step 5: Bring the light readings helper online so sweeps can run immediately.
   GUARD(light_readings_initialize(&g_device_light_readings_config));
 
-  // Step 6: Stage the thermistor reader on the internal SAADC.
-  GUARD(thermistor_reader_initialize(&g_device_thermistor_reader_config));
+  // Step 6: Stage the thermistor reader on the internal SAADC, applying this unit's stored
+  // calibration offset on top of the board constants.
+  ThermistorReaderConfig thermistor_config = g_device_thermistor_reader_config;
+  const PhrogSettings*   settings          = phrog_settings_get();
+  if (settings != NULL) {
+    thermistor_config.calibration_offset_c = settings->thermistor_calibration_offset_c;
+  }
+  GUARD(thermistor_reader_initialize(&thermistor_config));
 
   g_device_setup_ready = true;
   return PHX_OK;

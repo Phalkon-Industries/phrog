@@ -2,6 +2,7 @@
 
 #include "nau7802.hpp"
 #include "ph_equations.hpp"
+#include "phrog_settings.hpp"
 #include <Arduino.h>
 #include <stdio.h>
 #include <string.h>
@@ -125,9 +126,26 @@ static int compute_absorbance_pair(const LightReadingsSweepStats& baseline, cons
 
 static int handle_help(void);
 
-// Reports the firmware version for host sanity checks.
+// Sweeps per measurement: the stored setting when available, the compile-time default otherwise.
+static uint32_t measurement_sweep_count(void) {
+  const PhrogSettings* settings = phrog_settings_get();
+  return (settings != NULL) ? settings->measurement_sweep_count : CLI_MEASUREMENT_SWEEP_COUNT;
+}
+
+// Reports the firmware version and the active settings for host sanity checks.
 static int handle_version(void) {
   active_output()->println(k_firmware_version);
+  const PhrogSettings* settings = phrog_settings_get();
+  if (settings == NULL) {
+    active_output()->println("settings: not initialized");
+    return PHX_OK;
+  }
+  char line[80];
+  snprintf(line, sizeof(line), "measurement_sweep_count: %u", static_cast<unsigned>(settings->measurement_sweep_count));
+  active_output()->println(line);
+  snprintf(line, sizeof(line), "thermistor_calibration_offset_c: %.3f",
+           static_cast<double>(settings->thermistor_calibration_offset_c));
+  active_output()->println(line);
   return PHX_OK;
 }
 
@@ -137,7 +155,7 @@ static int handle_baseline(void) {
   delay(1);  // Let the line leave the USB buffer before the sweeps monopolise the loop.
 
   LightReadingsSweepCollection sweeps = {0u, g_light_readings_sweep_storage};
-  CLI_GUARD_EMIT("sweep", g_hooks.sweep_n(CLI_MEASUREMENT_SWEEP_COUNT, &sweeps));
+  CLI_GUARD_EMIT("sweep", g_hooks.sweep_n(measurement_sweep_count(), &sweeps));
   LightReadingsSweepStats stats = {};
   CLI_GUARD_EMIT("stats", g_hooks.compute_stats(&sweeps, &stats));
 
@@ -161,7 +179,7 @@ static int handle_sample(void) {
   // Step 2: Sweeps and statistics.
   LightReadingsSweepCollection sweeps       = {0u, g_light_readings_sweep_storage};
   LightReadingsSweepStats      sample_stats = {};
-  CLI_GUARD_EMIT("sweep", g_hooks.sweep_n(CLI_MEASUREMENT_SWEEP_COUNT, &sweeps));
+  CLI_GUARD_EMIT("sweep", g_hooks.sweep_n(measurement_sweep_count(), &sweeps));
   CLI_GUARD_EMIT("stats", g_hooks.compute_stats(&sweeps, &sample_stats));
 
   // Step 3: Sample temperature for the pH equations.
