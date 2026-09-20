@@ -21,12 +21,13 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 | `include/device_setup.hpp`, `src/device_setup.cpp` | Pin map, board configs, bring-up sequence. |
 | `src/main.cpp` | Production entry point (device setup + CLI). |
 | `src/examples/mock_main.cpp` | Mock BLE application for phone-app development (ported). |
+| `src/examples/led_blink_main.cpp` | Bench example that cycles the measurement LEDs every second. |
 | `lib/phoenix_common` | Shared `GUARD` macros and `PHX_*` return codes (ported verbatim). |
 | `lib/ph_equations` | Spectrophotometric pH maths (ported verbatim). |
 | `lib/phoenix_ble` | BLE server facade + Bluefruit backend (ported verbatim). |
 | `lib/mocks` | Mock controller and BLE bridge (ported verbatim). |
 | `lib/nau7802` | NAU7802 driver (skeleton). |
-| `lib/led_driver` | GPIO LED drive (skeleton). |
+| `lib/led_driver` | GPIO LED drive (implemented; NPN current sinks, active high). |
 | `lib/light_readings` | Dark/green/blue sweep helper (skeleton). |
 | `lib/thermistor_reader` | SAADC thermistor measurement (skeleton). |
 | `lib/cli` | Serial command interface (skeleton). |
@@ -40,6 +41,7 @@ Pin assignments: `docs/pin-map.md` and `include/device_setup.hpp`.
 ```powershell
 pio run -e main            # production firmware
 pio run -e mock_main       # mock BLE app
+pio run -e led_blink -t upload   # flash the LED cycling bench example
 pio test -e main -vv       # full Unity suite on hardware
 pio test -e main -vv -f *nau7802*
 ```
