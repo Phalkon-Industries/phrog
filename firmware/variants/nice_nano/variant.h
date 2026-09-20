@@ -114,9 +114,15 @@ static const uint8_t A6 = PIN_A6;
 static const uint8_t A7 = PIN_A7;
 #define ADC_RESOLUTION 14
 
-// Battery monitor (nice!nano v2; clones may differ).
-#define PIN_VBAT PIN_P0_04          // Battery divider sense.
-#define PIN_VBAT_DIVIDER PIN_P0_13  // Drive low to enable the divider before reading.
+// Battery sense and switched-rail control. These are internal to the module (not on the header).
+// Their behaviour depends on the board implementation: the nice!nano documentation, the community
+// variant, and the no-name clone phrog uses all disagree. phrog does not currently use either pin;
+// test/test_board_power reports what a given board does so nobody has to trust the documentation.
+#define PIN_VBAT PIN_P0_04  // Battery divider sense (AIN2). Read ~150 mV with no battery on our clone.
+// On our clone, driving P0.13 LOW switches off the module's 3.3 V output pin, which on phrog powers
+// the NAU7802 and the I2C pull-ups; HIGH or floating (the power-on state) keeps the rail up. The
+// nice!nano documentation claims the opposite polarity. Leave the pin floating.
+#define PIN_EXT_VCC_CUTOFF PIN_P0_13
 
 /*
  * Serial interfaces (Pro Micro RX/TX pads).
@@ -140,7 +146,7 @@ static const uint8_t MISO = PIN_SPI_MISO;
 static const uint8_t SCK  = PIN_SPI_SCK;
 
 /*
- * Wire Interfaces. phrog routes the NAU7802 on P1.04 (SCL) / P1.06 (SDA) per firmware/pins.txt.
+ * Wire Interfaces. phrog routes the NAU7802 on P1.04 (SCL) / P1.06 (SDA) per docs/pin-map.md.
  */
 #define WIRE_INTERFACES_COUNT 1
 

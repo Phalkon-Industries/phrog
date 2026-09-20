@@ -1,8 +1,13 @@
 # phrog Pin Map
 
-The phrog mainboard uses an nRF52840 Pro Micro / nice!nano module. Firmware pin macros are
-defined in `include/device_setup.hpp`; the board variant in `variants/nice_nano/` uses an
-identity map, so Arduino pin `N` is nRF GPIO `N` (`P1.13` is `32 + 13 = 45`).
+The phrog mainboard uses a no-name nRF52840 "Pro Micro" clone on the nice!nano footprint. Firmware
+pin macros are defined in `include/device_setup.hpp`; the board variant in `variants/nice_nano/`
+uses an identity map, so Arduino pin `N` is nRF GPIO `N` (`P1.13` is `32 + 13 = 45`).
+
+Source of truth for the routing is the KiCad project in `phrog-mainboard/`. The table below was
+checked against the PCB netlist.
+
+## Header pins used by phrog
 
 | Function                 | nRF pin | Arduino pin | Macro                        |
 |--------------------------|---------|-------------|------------------------------|
@@ -10,12 +15,26 @@ identity map, so Arduino pin `N` is nRF GPIO `N` (`P1.13` is `32 + 13 = 45`).
 | Thermistor drive         | P0.02   | 2           | `PIN_THERMISTOR_DRIVE`       |
 | Green LED drive          | P1.13   | 45          | `PIN_LED_GREEN_DRIVE`        |
 | Blue LED drive           | P1.11   | 43          | `PIN_LED_BLUE_DRIVE`         |
+| NAU7802 DRDY             | P1.00   | 32          | (not yet defined)            |
 | I2C SCL (NAU7802)        | P1.04   | 36          | `PIN_WIRE_SCL` (variant)     |
 | I2C SDA (NAU7802)        | P1.06   | 38          | `PIN_WIRE_SDA` (variant)     |
-| On-board LED (active low)| P0.15   | 15          | `LED_BUILTIN` (variant)      |
 
-Source of truth for the routing is the KiCad project in `phrog-mainboard/`; `firmware/pins.txt`
-is the original hand note.
+The thermistor divider is drive pin -> 10 k series resistor -> signal pin -> thermistor -> GND.
+Each LED is an NPN current sink (10 k / 5.6 k base divider, 27 R emitter), GPIO active high.
+The NAU7802 has blue on channel 1 (VIN1P) and green on channel 2 (VIN2P), both single-ended to
+ground, with REFP tied to the internal LDO output.
+
+## Module-internal pins
+
+These are not on the header, and phrog does not currently use them. Their behaviour depends on
+the board implementation, so `test/test_board_power` reports what it observes without failing
+on the outcome. The values below are what our no-name clone did on the bench.
+
+| Function                 | nRF pin | Arduino pin | Macro                | Observed on our clone |
+|--------------------------|---------|-------------|----------------------|--------------------|
+| Battery sense (SAADC)    | P0.04   | 4           | `PIN_VBAT` (variant) | ~150 mV at the pin with no battery attached; divider ratio not yet confirmed. |
+| Switched 3.3 V cutoff    | P0.13   | 13          | `PIN_EXT_VCC_CUTOFF` (variant) | LOW switches off the module's 3.3 V output, which powers the NAU7802 and I2C pull-ups. HIGH or floating keeps it on. The nice!nano docs claim the opposite polarity. Leave it floating. |
+| On-board LED (active low)| P0.15   | 15          | `LED_BUILTIN` (variant) | Blinks in `test_board_hello`. |
 
 ## Board definition
 
