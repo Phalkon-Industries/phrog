@@ -18,3 +18,10 @@ Still under early development
 | `phrog-mainboard/` | KiCad project, datasheets, and production outputs for the mainboard. |
 | `enclosure/` | FreeCAD enclosure model. |
 | `firmware/` | PlatformIO firmware for the nRF52840 Pro Micro (see `firmware/README.md`). |
+
+## License
+
+This project is licensed under the CERN Open Hardware Licence Version 2 - Strongly Reciprocal
+(`CERN-OHL-S-2.0`). See [`LICENSE`](LICENSE) for the full text.
+
+Source Location: https://github.com/Phalkon-Industries/phrog
